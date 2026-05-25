@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X, Sun, Moon } from "lucide-react";
 import { products } from "@/data/products";
@@ -14,15 +14,27 @@ const productLinks = products.map((p) => ({
 export function Navbar() {
   const { pathname } = useLocation();
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
   const isHome = pathname === "/" || pathname === "/global";
   const isActive = (path: string) => pathname === path;
   const { theme, toggle } = useTheme();
 
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 8);
+
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
     <header
-      className="fixed top-0 left-0 right-0 z-50 border-b border-white/6 backdrop-blur-xl"
-      style={{ background: "var(--bg-nav)" }}
+      className="sticky top-0 z-50 border-b border-white/6 backdrop-blur-xl transition-colors duration-300"
+      style={{
+        background: scrolled ? "rgba(3, 8, 6, 0.72)" : "var(--bg-nav)",
+      }}
     >
       <div className="max-w-screen-2xl mx-auto px-4 lg:px-8 h-16 flex items-center gap-3 justify-between">
 
@@ -74,26 +86,29 @@ export function Navbar() {
             </Link>
           ))}
           <div className="w-px h-4 bg-white/10 mx-1.5" />
-          <a
-            href="#contato"
+          <Link
+            to="/#contato"
             className="px-3 py-1.5 rounded-lg text-xs text-slate-400 hover:text-white transition-colors whitespace-nowrap"
           >
             Contato
-          </a>
+          </Link>
         </nav>
 
         {/* ─── Right actions ───────────────────────────────────────────────── */}
         <div className="hidden xl:flex items-center gap-2 flex-shrink-0">
           <Link
-            to="/clinico#planos"
+            to="/planos"
             className="px-4 py-1.5 rounded-lg text-xs font-bold text-white/80 hover:text-white border border-white/10 hover:border-white/25 hover:bg-white/6 transition-all tracking-wide uppercase"
           >
-            Planos
+            Ver todos planos
           </Link>
           <div className="w-px h-4 bg-white/10" />
-          <button className="px-4 py-1.5 rounded-lg text-xs font-bold border border-lime-500/35 bg-lime-500/8 text-lime-300 hover:bg-lime-500/18 hover:border-lime-500/60 transition-all tracking-wide">
+          <Link
+            to="/login"
+            className="px-4 py-1.5 rounded-lg text-xs font-bold border border-lime-500/35 bg-lime-500/8 text-lime-300 hover:bg-lime-500/18 hover:border-lime-500/60 transition-all tracking-wide"
+          >
             Login
-          </button>
+          </Link>
           <button
             onClick={toggle}
             aria-label={theme === "dark" ? "Modo claro" : "Modo escuro"}
@@ -166,22 +181,26 @@ export function Navbar() {
 
             <div className="pt-3 mt-2 border-t border-white/8 flex gap-2">
               <Link
-                to="/clinico#planos"
+                to="/planos"
                 onClick={() => setOpen(false)}
                 className="flex-1 py-2.5 rounded-lg border border-white/14 text-sm text-white font-semibold text-center uppercase tracking-wide"
               >
-                Planos
+                Ver todos planos
               </Link>
-              <a
-                href="#contato"
+              <Link
+                to="/#contato"
                 onClick={() => setOpen(false)}
                 className="flex-1 py-2.5 rounded-lg border border-white/8 text-sm text-slate-400 text-center"
               >
                 Contato
-              </a>
-              <button className="flex-1 py-2.5 rounded-lg border border-lime-500/40 bg-lime-500/10 text-lime-300 text-sm font-bold text-center">
+              </Link>
+              <Link
+                to="/login"
+                onClick={() => setOpen(false)}
+                className="flex-1 py-2.5 rounded-lg border border-lime-500/40 bg-lime-500/10 text-lime-300 text-sm font-bold text-center"
+              >
                 Login
-              </button>
+              </Link>
             </div>
           </nav>
         </div>

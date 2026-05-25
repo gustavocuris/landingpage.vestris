@@ -38,6 +38,7 @@ import {
 import { PageLayout } from "@/components/PageLayout";
 import { products } from "@/data/products";
 import { StatusBadge } from "@/components/ui/StatusBadge";
+import logoImg from "@/assets/20791dda-a0bf-42ab-a2f9-0b2e78388323.png";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 28 },
@@ -342,31 +343,38 @@ function SpeciesHeroCard() {
     ),
   };
 
-  return (
-    <div className="relative rounded-2xl border border-white/8 bg-black/45 backdrop-blur-sm overflow-hidden">
-      {/* Header */}
-      <div className="flex items-center gap-2 px-6 pt-5 pb-4 border-b border-white/5">
-        <span className={`w-2 h-2 rounded-full ${m.dot} animate-pulse`} />
-        <span className="text-xs text-slate-400 font-mono tracking-wider">vestris://sistema</span>
-        <span className="ml-auto text-[11px] font-mono text-slate-500 uppercase tracking-widest">ao vivo</span>
-      </div>
+  const displayTitle: Record<string, string> = {
+    clinico: "SISTEMA CLÍNICO",
+    lab: "LAB",
+    student: "STUDENT",
+    cetas: "CETAS/ZOO",
+    ongs: "ONGS",
+  };
 
-      {/* Module tab strip */}
-      <div className="flex items-center gap-1.5 px-6 py-3 border-b border-white/5 overflow-x-auto no-scrollbar">
-        {modules.map((mod, i) => (
-          <button
-            key={mod.id}
-            type="button"
-            onClick={() => { setActive(i); setTick(0); }}
-            className={`px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all ${
-              i === active
-                ? `${mod.bg} ${mod.text} border ${mod.border}`
-                : "text-slate-500 hover:text-slate-300"
-            }`}
-          >
-            {mod.label}
-          </button>
-        ))}
+  const headline: Record<string, string> = {
+    clinico: "Consulta por espécie",
+    lab: "Laboratório integrado",
+    student: "Formação aplicada",
+    cetas: "Gestão institucional",
+    ongs: "Resgate e reabilitação",
+  };
+
+  const subtitle: Record<string, string> = {
+    clinico: "Para veterinários e clínicas que atendem animais silvestres e exóticos.",
+    lab: "Controle de amostras, soroteca, código de barras e resultados rastreáveis.",
+    student: "Conteúdos por espécie, aulas rápidas, quizzes e trilhas de aprendizado.",
+    cetas: "Gestão de animais, recintos, protocolos internos e relatórios institucionais.",
+    ongs: "Acompanhamento de casos, voluntários, histórico e apoio operacional.",
+  };
+
+  return (
+    <div className="relative rounded-2xl border border-white/12 bg-black/45 backdrop-blur-sm overflow-hidden">
+      {/* Header */}
+      <div className="flex items-center justify-between px-6 py-5 border-b border-white/10">
+        <p className="text-sm sm:text-base font-black uppercase tracking-wide text-slate-100">
+          {headline[m.id]}
+        </p>
+        <Icon className={`w-5 h-5 ${m.text}`} />
       </div>
 
       {/* Module content */}
@@ -375,59 +383,48 @@ function SpeciesHeroCard() {
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-        className="px-6 pt-5 pb-4"
+        className="px-6 py-7"
       >
-        {/* Module header */}
-        <div className="flex items-center gap-3 mb-5">
-          <div className={`p-2.5 rounded-xl ${m.bg} border ${m.border}`}>
-            <Icon className={`w-5 h-5 ${m.text}`} />
-          </div>
-          <div>
-            <p className={`text-[11px] font-mono uppercase tracking-widest ${m.text}`}>{m.badge}</p>
-            <p className="text-base font-bold text-white mt-0.5 font-[Sora]">{m.tagline}</p>
-          </div>
+        <div className={`rounded-lg border ${m.border} ${m.bg} p-6`}>
+          <p className={`text-[11px] font-black uppercase tracking-[0.18em] ${m.text}`}>
+            {m.id === "clinico" ? "Disponível" : m.id === "lab" ? "Em desenvolvimento" : "Planejado"}
+          </p>
+          <h3 className="mt-5 text-3xl sm:text-4xl font-black uppercase leading-tight text-white">
+            VESTRIS <span className={m.text}>{displayTitle[m.id]}</span>
+          </h3>
+          <p className="mt-5 text-base sm:text-lg font-semibold leading-relaxed text-slate-200">
+            {subtitle[m.id]}
+          </p>
         </div>
 
-        {/* Demo area */}
-        <div className="mb-5">
-          {demoContent[m.id]}
-        </div>
-
-        {/* Feature list */}
-        <div className="space-y-2 border-t border-white/5 pt-4">
-          {m.features.map((feat) => (
-            <div key={feat} className="flex items-center gap-2.5">
-              <CheckCircle2 className={`w-3.5 h-3.5 flex-shrink-0 ${m.text}`} />
-              <p className="text-xs text-slate-400 leading-tight">{feat}</p>
+        <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {m.features.slice(0, 4).map((feat) => (
+            <div key={feat} className="min-h-[112px] rounded-lg border border-white/18 bg-black/38 p-5">
+              <CheckCircle2 className={`w-4 h-4 ${m.text}`} />
+              <p className="mt-7 text-sm sm:text-base font-black uppercase leading-tight text-white">
+                {feat}
+              </p>
             </div>
           ))}
         </div>
-      </motion.div>
 
-      {/* Progress bar */}
-      <div className="px-6 pb-5 pt-3">
-        <div className="w-full h-0.5 rounded-full bg-white/6 overflow-hidden">
-          <motion.div
-            className={`h-full rounded-full ${m.bar}`}
-            initial={{ width: "0%" }}
-            animate={{ width: `${tick}%` }}
-            transition={{ duration: 0.3, ease: "linear" }}
-          />
-        </div>
-        <div className="flex items-center justify-between mt-2">
-          <p className="text-[11px] text-slate-600">Próximo em {Math.ceil((100 - tick) / 10)}s</p>
+        <div className="mt-6 flex items-center justify-between border-t border-white/8 pt-4">
+          <p className="text-[11px] text-slate-500">
+            Próximo em {Math.ceil((100 - tick) / 10)}s
+          </p>
           <div className="flex gap-1.5">
-            {modules.map((_, i) => (
+            {modules.map((mod, i) => (
               <button
-                key={i}
+                key={mod.id}
                 type="button"
                 onClick={() => { setActive(i); setTick(0); }}
-                className={`rounded-full transition-all duration-300 ${i === active ? `w-5 h-1.5 ${m.bar}` : "w-1.5 h-1.5 bg-white/12 hover:bg-white/25"}`}
+                aria-label={mod.label}
+                className={`rounded-full transition-all duration-300 ${i === active ? `w-6 h-1.5 ${m.bar}` : "w-1.5 h-1.5 bg-white/14 hover:bg-white/30"}`}
               />
             ))}
           </div>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 }
@@ -525,9 +522,15 @@ function Hero() {
 
           {/* Headline */}
           <motion.h1 initial={{ opacity: 0, y: 32 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
-            className="leading-[1.05] mb-6 tracking-wide" style={{ fontSize: "clamp(4rem,8vw,10rem)", fontFamily: "'Anton', sans-serif" }}>
-            <span className="block text-white">GLOBAL</span>
-            <span className="block text-gradient-green pr-4">VESTRIS</span>
+            className="global-hero-title relative leading-[1.05] mb-6 tracking-wide" style={{ fontSize: "clamp(4rem,8vw,10rem)", fontFamily: "'Anton', sans-serif" }}>
+            <img
+              src={logoImg}
+              alt=""
+              aria-hidden="true"
+              className="global-hero-title-logo"
+            />
+            <span className="relative z-10 block text-white">GLOBAL</span>
+            <span className="relative z-10 block text-gradient-green pr-4">VESTRIS</span>
           </motion.h1>
 
           {/* Tagline */}
@@ -552,9 +555,9 @@ function Hero() {
               Explorar Ecossistema
               <ArrowRight className="w-4 h-4 flex-shrink-0 group-hover:translate-x-1 transition-transform" />
             </a>
-            <Link to="/clinico" className="group inline-flex items-center gap-2 px-6 py-3.5 rounded-xl border border-yellow-400/40 bg-yellow-400/10 hover:bg-yellow-400/20 text-yellow-300 font-black text-sm tracking-wider uppercase transition-all hover:border-yellow-400/60 hover:scale-[1.02] whitespace-nowrap">
+            <Link to="/planos" className="group inline-flex items-center gap-2 px-6 py-3.5 rounded-xl border border-yellow-400/40 bg-yellow-400/10 hover:bg-yellow-400/20 text-yellow-300 font-black text-sm tracking-wider uppercase transition-all hover:border-yellow-400/60 hover:scale-[1.02] whitespace-nowrap">
               <Stethoscope className="w-4 h-4 flex-shrink-0" />
-              Sistema Clínico
+              Ver todos planos
               <ArrowRight className="w-3.5 h-3.5 flex-shrink-0 opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all" />
             </Link>
           </motion.div>
@@ -674,7 +677,7 @@ function Ecossistema() {
         </motion.div>
 
         <motion.div variants={scaleIn} className="mb-5">
-          <Link to={featured.path} className="group relative flex flex-col lg:flex-row overflow-hidden rounded-2xl border border-lime-500/20 bg-gradient-to-br from-lime-950/20 via-emerald-950/10 to-transparent p-9 lg:p-11 card-hover">
+          <Link to={featured.path} className="global-featured-card group relative flex flex-col lg:flex-row overflow-hidden rounded-2xl border border-lime-500/20 bg-gradient-to-br from-lime-950/20 via-emerald-950/10 to-transparent p-9 lg:p-11 card-hover">
             <div className="absolute inset-0 opacity-0 group-hover:opacity-100 animate-shimmer transition-opacity duration-500 pointer-events-none" />
             <div className="absolute top-5 right-5 hidden lg:flex items-center gap-2">
                     <span className="text-[9px] font-mono text-lime-600 tracking-widest uppercase">Ferramenta principal</span>
@@ -725,13 +728,13 @@ function Ecossistema() {
             if (!identity) return null;
             return (
               <motion.div key={p.id} variants={fadeUp}>
-                <Link to={p.path} className={`group flex flex-col h-full rounded-2xl border ${identity.border} bg-gradient-to-br ${identity.gradFrom} to-transparent p-6 card-hover overflow-hidden relative`}>
+                <Link to={p.path} className={`global-system-card group flex flex-col h-full rounded-2xl border ${identity.border} bg-gradient-to-br ${identity.gradFrom} to-transparent p-6 card-hover overflow-hidden relative`}>
                   <p className={`text-[8px] font-mono ${identity.accent} uppercase tracking-[0.15em] mb-3 opacity-70`}>{identity.tech}</p>
                   <div className="flex items-center gap-2 mb-4">
                     <span className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${identity.dot}`} />
                     <span className={`text-[9px] font-bold ${identity.statusColor} uppercase tracking-wider`}>{identity.status}</span>
                   </div>
-                  <h3 className="text-xl font-black text-white leading-tight mb-2">{p.shortName}</h3>
+              <h3 className="text-xl font-black text-white leading-tight mb-2">{p.shortName}</h3>
                   <p className="text-slate-200 text-xs leading-relaxed flex-1">{identity.desc}</p>
                   <div className="mt-4 space-y-1.5">
                     {identity.features.map((f) => (
@@ -783,7 +786,7 @@ function PorQueVestris() {
               const Icon = item.icon;
               return (
                 <motion.div key={item.title} variants={fadeUp} whileHover={{ y: -4 }}
-                  className="relative flex flex-col gap-3 p-6 rounded-2xl border border-white/6 bg-white/2 transition-colors cursor-default overflow-hidden">
+                  className="global-info-card relative flex flex-col gap-3 p-6 rounded-2xl border border-white/6 bg-white/2 transition-colors cursor-default overflow-hidden">
                   <span className="absolute top-3 right-4 text-[8px] font-mono text-slate-400 uppercase tracking-wider">{item.tag}</span>
                   <div className="w-9 h-9 rounded-xl bg-yellow-400/8 border border-yellow-400/10 flex items-center justify-center flex-shrink-0">
                     <Icon className="w-4 h-4 text-yellow-400" />
@@ -831,7 +834,7 @@ function Visao() {
             const Icon = p.icon;
             return (
               <motion.div key={p.num} variants={fadeUp} whileHover={{ y: -4 }}
-                className="relative p-7 rounded-2xl border border-white/7 bg-white/2 transition-all cursor-default overflow-hidden">
+                className="global-pillar-card relative p-7 rounded-2xl border border-white/7 bg-white/2 transition-all cursor-default overflow-hidden">
                 <span className="absolute top-4 right-5 text-5xl font-black text-white/3 select-none leading-none">{p.num}</span>
                 <span className="absolute top-5 left-6 text-[7px] font-mono text-slate-500 uppercase tracking-widest">{p.tech}</span>
                 <div className="w-9 h-9 rounded-xl bg-emerald-500/10 border border-emerald-500/15 flex items-center justify-center mb-5 mt-5">
@@ -872,7 +875,7 @@ function Depoimentos() {
           <motion.div variants={stagger} className="grid md:grid-cols-3 gap-4">
             {items.map((t) => (
               <motion.div key={t.title} variants={scaleIn} whileHover={{ y: -4 }}
-                className="relative p-7 rounded-2xl border border-white/7 bg-white/2 hover:border-lime-500/15 transition-all cursor-default">
+                className="global-testimonial-card relative p-7 rounded-2xl border border-white/7 bg-white/2 hover:border-lime-500/15 transition-all cursor-default">
                 <div className="flex items-center gap-2 mb-4">
                   <CheckCircle2 className="w-4 h-4 text-lime-400" />
                   <span className="text-[10px] font-black uppercase tracking-widest text-lime-400">{t.label}</span>
@@ -913,9 +916,9 @@ function CTAFinal() {
           O ecossistema que coloca a informação onde ela precisa estar: do seu lado, organizada por espécie, pronta para quando importa.
         </motion.p>
         <motion.div variants={fadeUp} className="flex flex-col sm:flex-row gap-3 justify-center mb-8">
-          <Link to="/clinico" className="group inline-flex items-center justify-center gap-2 px-9 py-4 rounded-xl bg-yellow-400 hover:bg-yellow-300 text-black font-black text-sm transition-all glow-yellow hover:scale-[1.03] active:scale-[0.98]">
+          <Link to="/planos" className="group inline-flex items-center justify-center gap-2 px-9 py-4 rounded-xl bg-yellow-400 hover:bg-yellow-300 text-black font-black text-sm transition-all glow-yellow hover:scale-[1.03] active:scale-[0.98]">
             <Stethoscope className="w-4 h-4" />
-            Conhecer Sistema Clínico
+            Ver todos planos
             <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
           </Link>
           <a href="#ecossistema" className="inline-flex items-center justify-center gap-2 px-9 py-4 rounded-xl border border-white/12 bg-white/4 hover:bg-white/8 text-white font-semibold text-sm transition-all">
@@ -930,6 +933,54 @@ function CTAFinal() {
         </motion.p>
       </motion.div>
     </section>
+  );
+}
+
+function GlobalSystemShowcase({ device }: { device: "desktop" | "tablet" | "mobile" }) {
+  const compact = device !== "desktop";
+  const functions = [
+    "Prontuario inteligente",
+    "Calculo de doses",
+    "Condutas e referencias",
+    "Historico organizado",
+  ];
+
+  return (
+    <div className="h-full w-full overflow-hidden bg-[#041008] text-white" style={{ fontFamily: "Inter, sans-serif" }}>
+      <div className="flex items-center justify-between border-b border-white/12 px-5 py-4">
+        <p className="text-[14px] font-black uppercase tracking-wide text-slate-100">
+          Consulta por especie
+        </p>
+        <Stethoscope className="h-5 w-5 text-emerald-300" />
+      </div>
+
+      <div className={compact ? "p-4" : "p-6"}>
+        <div
+          className="rounded-lg border border-emerald-400/35 bg-emerald-400/12 p-5"
+        >
+          <p className="text-[10px] font-black uppercase tracking-[0.18em] text-emerald-300">
+            Disponivel
+          </p>
+          <h3 className={compact ? "mt-4 text-[22px] font-black uppercase leading-tight text-white" : "mt-5 text-[34px] font-black uppercase leading-tight text-white"}>
+            VESTRIS <span className="text-lime-300">SISTEMA CLINICO</span>
+          </h3>
+          <p className={compact ? "mt-4 text-[12px] font-semibold leading-relaxed text-slate-200" : "mt-5 text-[16px] font-semibold leading-relaxed text-slate-200"}>
+            Para veterinarios e clinicas que atendem animais silvestres e exoticos.
+          </p>
+        </div>
+
+        <div className={compact ? "mt-4 grid grid-cols-1 gap-3" : "mt-6 grid grid-cols-2 gap-5"}>
+          {functions.map((item) => (
+            <div key={item} className={compact ? "min-h-[74px] rounded-lg border border-white/18 bg-black/38 p-4" : "min-h-[116px] rounded-lg border border-white/18 bg-black/38 p-5"}>
+              <CheckCircle2 className="h-4 w-4 text-emerald-300" />
+              <p className={compact ? "mt-4 text-[12px] font-black uppercase leading-tight text-white" : "mt-7 text-[15px] font-black uppercase leading-tight text-white"}>
+                {item}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
   );
 }
 
@@ -1316,7 +1367,7 @@ function DeviceMockup() {
                         </div>
                       </div>
                       <div style={{ position: "absolute", inset: 0, top: 24 }}>
-                        <SystemUI />
+                        <GlobalSystemShowcase device={device} />
                       </div>
                     </motion.div>
                   </div>
@@ -1432,7 +1483,7 @@ function DeviceMockup() {
                   <div style={{ borderRadius: 14, overflow: "hidden", aspectRatio: "3/4", background: "#07100a", position: "relative" }}>
                     <motion.div key="tablet-screen" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.35 }}
                       style={{ position: "absolute", inset: 0 }}>
-                      <SystemUI />
+                      <GlobalSystemShowcase device={device} />
                     </motion.div>
                   </div>
                   {/* Home indicator */}
@@ -1523,7 +1574,7 @@ function DeviceMockup() {
                     <div style={{ position: "relative", aspectRatio: "9/17", background: "#07100a" }}>
                       <motion.div key="mobile-screen" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.35 }}
                         style={{ position: "absolute", inset: 0 }}>
-                        <SystemUI />
+                        <GlobalSystemShowcase device={device} />
                       </motion.div>
                     </div>
 
@@ -1546,14 +1597,16 @@ function DeviceMockup() {
 export function GlobalVestris() {
   return (
     <PageLayout>
-      <Hero />
-      <QuemSomos />
-      <Ecossistema />
-      <PorQueVestris />
-      <Visao />
-      <DeviceMockup />
-      <Depoimentos />
-      <CTAFinal />
+      <div className="global-vestris-page">
+        <Hero />
+        <QuemSomos />
+        <Ecossistema />
+        <PorQueVestris />
+        <Visao />
+        <DeviceMockup />
+        <Depoimentos />
+        <CTAFinal />
+      </div>
     </PageLayout>
   );
 }

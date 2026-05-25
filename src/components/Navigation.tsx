@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { navLinks } from "@/data/index";
@@ -7,12 +7,25 @@ import logoImg from "@/assets/logo-ofc-vestris.png";
 export function Navigation() {
   const { pathname } = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
   const isActive = (path: string) =>
     pathname === path || (path === "/clinico" && pathname === "/");
 
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 8);
+
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 border-b border-white/8 bg-[#050a07]/90 backdrop-blur-xl">
+    <header
+      className="sticky top-0 z-50 border-b border-white/8 backdrop-blur-xl transition-colors duration-300"
+      style={{ background: scrolled ? "rgba(5, 10, 7, 0.72)" : "rgba(5, 10, 7, 0.9)" }}
+    >
       <div className="max-w-screen-2xl mx-auto px-4 lg:px-8 h-14 flex items-center justify-between gap-4">
         {/* Brand */}
         <Link
@@ -57,9 +70,12 @@ export function Navigation() {
 
         {/* Right actions */}
         <div className="hidden xl:flex items-center gap-2 flex-shrink-0">
-          <button className="px-3 py-1.5 rounded-lg text-xs text-slate-400 hover:text-white transition-colors">
+          <Link
+            to="/login"
+            className="px-3 py-1.5 rounded-lg text-xs text-slate-400 hover:text-white transition-colors"
+          >
             Entrar
-          </button>
+          </Link>
           <Link
             to="/planos"
             className="px-3 py-1.5 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-white text-xs font-semibold transition-colors shadow-sm shadow-emerald-500/30"
@@ -108,9 +124,13 @@ export function Navigation() {
               );
             })}
             <div className="pt-3 mt-2 border-t border-white/8 flex gap-2">
-              <button className="flex-1 py-2 rounded-lg border border-white/12 text-sm text-slate-400 hover:text-white transition-colors">
+              <Link
+                to="/login"
+                onClick={() => setMobileOpen(false)}
+                className="flex-1 py-2 rounded-lg border border-white/12 text-sm text-slate-400 hover:text-white transition-colors text-center"
+              >
                 Entrar
-              </button>
+              </Link>
               <Link
                 to="/planos"
                 onClick={() => setMobileOpen(false)}

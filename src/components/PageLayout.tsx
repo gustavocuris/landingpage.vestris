@@ -11,7 +11,7 @@ export function PageLayout({ children, noFooter = false }: PageLayoutProps) {
     <div className="relative min-h-screen">
       <div aria-hidden="true" className="global-grid-overlay" />
       <Navbar />
-      <main className="relative z-10 pt-16">{children}</main>
+      <main className="relative z-10">{children}</main>
       {!noFooter && (
         <div className="relative z-10">
           <Footer />

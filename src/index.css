@@ -259,3 +259,314 @@ body {
     animation: orbit-spin 20s linear infinite reverse;
   }
 }
+
+/* Global Vestris page polish */
+.global-vestris-page {
+  --global-panel: rgba(3, 12, 7, 0.82);
+  --global-panel-strong: rgba(4, 18, 10, 0.92);
+  --global-line: rgba(255, 255, 255, 0.13);
+  --global-line-soft: rgba(163, 230, 53, 0.16);
+}
+
+.global-vestris-page h1,
+.global-vestris-page h2,
+.global-vestris-page h3 {
+  font-family: "Barlow", "Sora", Inter, system-ui, sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0;
+  text-wrap: balance;
+}
+
+.global-vestris-page h1 {
+  line-height: 0.96;
+  font-weight: 950;
+}
+
+.global-vestris-page h2 {
+  line-height: 1.04;
+  font-weight: 950;
+}
+
+.global-vestris-page h3 {
+  line-height: 1.15;
+}
+
+.global-vestris-page p {
+  text-wrap: pretty;
+}
+
+.global-vestris-page section {
+  scroll-margin-top: 5rem;
+}
+
+.global-vestris-page .max-w-7xl {
+  width: min(100% - 2rem, 80rem);
+}
+
+.global-vestris-page .rounded-2xl,
+.global-vestris-page .rounded-3xl {
+  border-radius: 0.5rem !important;
+}
+
+.global-vestris-page .rounded-xl {
+  border-radius: 0.45rem !important;
+}
+
+.global-vestris-page .bg-white\/2,
+.global-vestris-page .bg-white\/3,
+.global-vestris-page .bg-black\/40,
+.global-vestris-page .bg-black\/60,
+.global-vestris-page .glass-card {
+  background: linear-gradient(180deg, var(--global-panel-strong), var(--global-panel)) !important;
+  border-color: var(--global-line) !important;
+  box-shadow: 0 18px 52px rgba(0, 0, 0, 0.22);
+}
+
+.global-vestris-page .card-hover {
+  transition: transform 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease, background 0.22s ease;
+}
+
+.global-vestris-page .card-hover:hover {
+  border-color: var(--global-line-soft) !important;
+  box-shadow: 0 22px 70px rgba(0, 0, 0, 0.34), 0 0 0 1px rgba(163, 230, 53, 0.05);
+}
+
+.global-vestris-page a,
+.global-vestris-page button {
+  border-radius: 0.5rem !important;
+  text-transform: uppercase;
+  letter-spacing: 0.035em;
+  font-family: "Barlow", "Sora", Inter, system-ui, sans-serif;
+  font-weight: 900;
+}
+
+.global-vestris-page a.inline-flex,
+.global-vestris-page button.inline-flex,
+.global-vestris-page a[class*="inline-flex"],
+.global-vestris-page button[class*="inline-flex"] {
+  min-height: 3.25rem;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow:
+    0 14px 34px rgba(0, 0, 0, 0.24),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+.global-vestris-page a.inline-flex:hover,
+.global-vestris-page button.inline-flex:hover,
+.global-vestris-page a[class*="inline-flex"]:hover,
+.global-vestris-page button[class*="inline-flex"]:hover {
+  border-color: rgba(163, 230, 53, 0.34);
+  box-shadow:
+    0 18px 46px rgba(0, 0, 0, 0.34),
+    0 0 0 1px rgba(163, 230, 53, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.16);
+}
+
+.global-vestris-page .text-gradient-green {
+  background: linear-gradient(135deg, #f8fff2 0%, #a3e635 48%, #4ade80 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+.global-vestris-page .divider {
+  opacity: 0.9;
+}
+
+.global-vestris-page .global-hero-title {
+  isolation: isolate;
+  overflow: visible;
+}
+
+.global-vestris-page .global-hero-title-logo {
+  position: absolute;
+  z-index: 0;
+  width: clamp(9rem, 18vw, 20rem);
+  height: auto;
+  left: 96%;
+  top: 51%;
+  transform: translate(-17%, -50%) rotate(-8deg);
+  opacity: 0.28;
+  filter: drop-shadow(0 0 30px rgba(163, 230, 53, 0.38));
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+
+.global-vestris-page .global-featured-card {
+  min-height: 360px;
+  padding: clamp(2rem, 4vw, 3.75rem) !important;
+  background:
+    linear-gradient(135deg, rgba(163, 230, 53, 0.13), rgba(16, 185, 129, 0.08) 42%, rgba(3, 12, 7, 0.9)),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent) !important;
+  border-color: rgba(163, 230, 53, 0.28) !important;
+}
+
+.global-vestris-page .global-featured-card::before,
+.global-vestris-page .global-system-card::before,
+.global-vestris-page .global-info-card::before,
+.global-vestris-page .global-pillar-card::before,
+.global-vestris-page .global-testimonial-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.08), transparent 34%),
+    radial-gradient(circle at 12% 8%, rgba(163, 230, 53, 0.08), transparent 32%);
+  opacity: 0.85;
+}
+
+.global-vestris-page .global-featured-card h3 {
+  font-size: clamp(2.5rem, 5vw, 4.6rem) !important;
+  line-height: 0.98 !important;
+  max-width: 680px;
+}
+
+.global-vestris-page .global-featured-card p {
+  font-size: 1rem !important;
+  line-height: 1.75 !important;
+  max-width: 560px;
+}
+
+.global-vestris-page .global-featured-card li {
+  font-size: 0.86rem !important;
+  line-height: 1.35;
+}
+
+.global-vestris-page .global-system-card,
+.global-vestris-page .global-info-card,
+.global-vestris-page .global-pillar-card,
+.global-vestris-page .global-testimonial-card {
+  min-height: 280px;
+  padding: 1.65rem !important;
+  position: relative;
+  isolation: isolate;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.012)),
+    linear-gradient(145deg, rgba(4, 18, 10, 0.94), rgba(2, 8, 5, 0.86)) !important;
+  border-color: rgba(255, 255, 255, 0.16) !important;
+}
+
+.global-vestris-page .global-system-card {
+  min-height: 300px;
+}
+
+.global-vestris-page .global-system-card > *,
+.global-vestris-page .global-info-card > *,
+.global-vestris-page .global-pillar-card > *,
+.global-vestris-page .global-testimonial-card > *,
+.global-vestris-page .global-featured-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.global-vestris-page .global-system-card:hover,
+.global-vestris-page .global-info-card:hover,
+.global-vestris-page .global-pillar-card:hover,
+.global-vestris-page .global-testimonial-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(163, 230, 53, 0.28) !important;
+  background:
+    linear-gradient(180deg, rgba(163, 230, 53, 0.07), rgba(255, 255, 255, 0.02)),
+    linear-gradient(145deg, rgba(5, 24, 13, 0.96), rgba(2, 8, 5, 0.88)) !important;
+}
+
+.global-vestris-page .global-system-card h3 {
+  font-size: clamp(1.65rem, 2.2vw, 2.15rem) !important;
+  line-height: 1.05 !important;
+  margin-bottom: 1rem !important;
+}
+
+.global-vestris-page .global-system-card p,
+.global-vestris-page .global-info-card p,
+.global-vestris-page .global-pillar-card p,
+.global-vestris-page .global-testimonial-card p {
+  font-size: 0.98rem !important;
+  line-height: 1.68 !important;
+  color: #dbe7df !important;
+}
+
+.global-vestris-page .global-info-card h3,
+.global-vestris-page .global-pillar-card h3,
+.global-vestris-page .global-testimonial-card h3,
+.global-vestris-page .global-info-card .font-black,
+.global-vestris-page .global-pillar-card .font-black,
+.global-vestris-page .global-testimonial-card .font-black {
+  font-size: 1.12rem !important;
+  line-height: 1.18 !important;
+  color: #ffffff !important;
+}
+
+.global-vestris-page .global-info-card svg,
+.global-vestris-page .global-pillar-card svg,
+.global-vestris-page .global-testimonial-card svg {
+  width: 1.35rem;
+  height: 1.35rem;
+}
+
+.global-vestris-page .global-info-card > div:first-of-type,
+.global-vestris-page .global-pillar-card > div:first-of-type {
+  width: 3rem !important;
+  height: 3rem !important;
+  border-radius: 0.75rem !important;
+  background: rgba(163, 230, 53, 0.09) !important;
+  border-color: rgba(163, 230, 53, 0.18) !important;
+}
+
+@media (min-width: 1024px) {
+  .global-vestris-page h2 {
+    max-width: 100%;
+  }
+
+  .global-vestris-page h2 span.block {
+    display: inline !important;
+  }
+
+  .global-vestris-page h2 span.block::after {
+    content: " ";
+  }
+
+  .global-vestris-page .grid.lg\:grid-cols-4 {
+    gap: 1.25rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .global-vestris-page h1 {
+    line-height: 1.02;
+  }
+
+  .global-vestris-page h2 {
+    line-height: 1.08;
+  }
+
+  .global-vestris-page .max-w-7xl {
+    width: min(100% - 1.25rem, 80rem);
+  }
+
+  .global-vestris-page .global-hero-title-logo {
+    width: clamp(7.5rem, 38vw, 12rem);
+    left: 84%;
+    top: 52%;
+    transform: translate(-18%, -50%) rotate(-8deg);
+    opacity: 0.22;
+  }
+
+  .global-vestris-page .global-featured-card,
+  .global-vestris-page .global-system-card,
+  .global-vestris-page .global-info-card,
+  .global-vestris-page .global-pillar-card,
+  .global-vestris-page .global-testimonial-card {
+    min-height: auto;
+    padding: 1.35rem !important;
+  }
+
+  .global-vestris-page a.inline-flex,
+  .global-vestris-page button.inline-flex,
+  .global-vestris-page a[class*="inline-flex"],
+  .global-vestris-page button[class*="inline-flex"] {
+    width: 100%;
+    justify-content: center;
+    white-space: normal;
+    text-align: center;
+  }
+}
